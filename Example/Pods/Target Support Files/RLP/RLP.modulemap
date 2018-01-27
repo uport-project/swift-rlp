@@ -1,0 +1,6 @@
+framework module RLP {
+  umbrella header "RLP-umbrella.h"
+
+  export *
+  module * { export * }
+}

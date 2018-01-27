@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0310D709201C8DEA0027433C /* RLPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310D708201C8DEA0027433C /* RLPTests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -28,8 +29,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2B7AC9A29F06C7BE5239307A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		41464579827AAC585A125893 /* RLP.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = RLP.podspec; path = ../RLP.podspec; sourceTree = "<group>"; };
+		0310D708201C8DEA0027433C /* RLPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLPTests.swift; sourceTree = "<group>"; };
+		2B7AC9A29F06C7BE5239307A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		41464579827AAC585A125893 /* RLP.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RLP.podspec; path = ../RLP.podspec; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* RLP_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RLP_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,7 +45,7 @@
 		6FAC78E5C56A73BA8BCFC262 /* Pods-RLP_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RLP_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RLP_Example/Pods-RLP_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		9F776C00773F52AE3D14515F /* Pods-RLP_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RLP_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RLP_Tests/Pods-RLP_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C81EE44A183A89F458D0AD94 /* Pods_RLP_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RLP_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5039B49E22CFBC971F22D90 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D5039B49E22CFBC971F22D90 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		E716DE36D1F70DAF9205009B /* Pods-RLP_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RLP_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-RLP_Example/Pods-RLP_Example.release.xcconfig"; sourceTree = "<group>"; };
 		EE4F91EC4ABAAF98B1DFE3B8 /* Pods-RLP_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RLP_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RLP_Tests/Pods-RLP_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		FC49C1A291A9187CDCEDD25C /* Pods_RLP_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RLP_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +119,7 @@
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				0310D708201C8DEA0027433C /* RLPTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0310D709201C8DEA0027433C /* RLPTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,7 +529,7 @@
 				INFOPLIST_FILE = RLP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.uport.RLP-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -540,7 +544,7 @@
 				INFOPLIST_FILE = RLP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.uport.RLP-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
