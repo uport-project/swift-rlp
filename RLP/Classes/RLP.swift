@@ -38,11 +38,11 @@ extension Data {
         }
 
         let minimalData = self.count.toMinimalData()
-        var byte = UInt8( offset + 0x37 + minimalData.count )
+        let byte = UInt8( offset + 0x37 + minimalData.count )
         var someData = Data( bytes: [byte] )
-//        return self.count.toMinimalByteArray().let { arr ->
-//        ByteArray(1, { (offset + 0x37 + arr.size).toByte() }) + arr + this
-        return Data()
+        someData.append(minimalData)
+        someData.append(self)
+        return someData
     }
 
     fileprivate func minimalStart() throws -> Int {
@@ -62,20 +62,23 @@ extension Data {
     }
 }
 
-//private fun ByteArray.minimalStart() = indexOfFirst { it != 0.toByte() }.let { if (it == -1) 4 else it }
-
-
-//fun ByteArray.removeLeadingZero() = if (first() == 0.toByte()) copyOfRange(1, size) else this
-
-
 extension String {
     /// Throws if the receiver can’t be converted without losing some information (such as accents or case)
-    public func toRLP() throws -> RLPElement? {
+    public func toRLP() throws -> RLPElement {
         guard let bytes = self.data( using: .utf8 ) else { throw RLPError.toRLPConversionLosesInformation }
         return RLPElement.init( bytes: bytes )
     }
 }
 
+extension Int {
+    public func toRLP() throws -> RLPElement {
+        if self == 0 {
+            return RLPElement.init( bytes: Data() )
+        }
+        
+        return RLPElement.init( bytes: self.toMinimalData() )
+    }
+}
 
 public class RLPElement: NSObject, RLPType {
     public var bytes: Data
@@ -103,7 +106,7 @@ extension Int {
         var output = Data()
         for i in 0..<4 {
             let numBitsToShift = 8 * (3 - i)
-            let isolatedBits = UInt8(self >> numBitsToShift)
+            let isolatedBits = UInt8( (self >> numBitsToShift) & 0xff )
             output.append( isolatedBits )
         }
 
@@ -111,9 +114,10 @@ extension Int {
     }
 
     public func toMinimalData() -> Data {
-        var outputData = [UInt8]( repeating:0, count:4 )
         let data = self.toData()
         let minimalStart = try! data.minimalStart()
+        let count = 4 - minimalStart
+        var outputData = [UInt8]( repeating:0, count: count )
         data.copyBytes( to: &outputData, from: minimalStart..<4 )
         return Data( bytes: outputData )
     }
