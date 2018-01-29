@@ -2,21 +2,29 @@
   "name": "RLP",
   "version": "0.1.0",
   "summary": "A short description of RLP.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/josh/RLP",
+  "description": "RLP as of Appendix B. Recursive Length Prefix at https://github.com/ethereum/yellowpaper",
+  "homepage": "https://github.com/uport-project/swift-rlp",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": {
-    "josh": "belljh@gmail.com"
+    "Joshua Bell": "joshua.bell@consensys.net"
   },
   "source": {
-    "git": "https://github.com/josh/RLP.git",
+    "git": "https://github.com/uport-project/swift-rlp.git",
     "tag": "0.1.0"
   },
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "RLP/Classes/**/*"
+  "source_files": "RLP/Classes/**/*",
+  "dependencies": {
+    "NSData+FastHex": [
+
+    ],
+    "BigInt": [
+      "~> 3.0"
+    ]
+  }
 }

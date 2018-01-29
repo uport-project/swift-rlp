@@ -6,17 +6,23 @@
 //  Copyright © 2018 CocoaPods. All rights reserved.
 //
 
-//import Quick
-//import Nimble
-//import RLP
+import Quick
+import Nimble
+import RLP
+import NSData_FastHex
 
 class RLPTests: QuickSpec {
     
     override func spec() {
         describe("Encoding works") {
-            /*
+
             it("can encode strings") {
-                expect("".toRLP().encode()) == "80".hexToData()
+                let rlpType = try! "".toRLP()
+                let bytes = try! (rlpType as! RLPType).encodeRLP()
+                let expectedData = NSData( hexString: "80" ) as Data
+                expect( bytes ) == expectedData
+            }
+                /*
                 expect("dog".toRLP().encode()) == "83646f67".hexToData()
                 expect("Lorem ipsum dolor sit amet, consectetur adipisicing eli".toRLP().encode()) == "b74c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465747572206164697069736963696e6720656c69".hexToData()
                 expect("Lorem ipsum dolor sit amet, consectetur adipisicing elit".toRLP().encode()) == "b8384c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465747572206164697069736963696e6720656c6974".hexToData()

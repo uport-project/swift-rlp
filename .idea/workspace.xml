@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f763c1d-3577-4f58-83bf-333f37083cba" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/Example/Pods/Pods.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Example/Pods/Pods.xcodeproj/project.pbxproj" />
+      <change beforePath="$PROJECT_DIR$/Example/RLP.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Example/RLP.xcodeproj/project.pbxproj" />
+      <change beforePath="$PROJECT_DIR$/Example/RLP.xcodeproj/xcshareddata/xcschemes/RLP-Example.xcscheme" afterPath="$PROJECT_DIR$/Example/RLP.xcodeproj/xcshareddata/xcschemes/RLP-Example.xcscheme" />
       <change beforePath="$PROJECT_DIR$/Example/Tests/RLPTests.swift" afterPath="$PROJECT_DIR$/Example/Tests/RLPTests.swift" />
+      <change beforePath="$PROJECT_DIR$/Example/Tests/Tests.swift" afterPath="$PROJECT_DIR$/Example/Tests/Tests.swift" />
+      <change beforePath="$PROJECT_DIR$/RLP/Classes/RLP.swift" afterPath="$PROJECT_DIR$/RLP/Classes/RLP.swift" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -89,12 +94,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1517052303653</updated>
-      <workItem from="1517052304812" duration="162000" />
+      <workItem from="1517052304812" duration="824000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162000" />
+    <option name="totallyTimeSpent" value="824000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1023" extended-state="6" />
