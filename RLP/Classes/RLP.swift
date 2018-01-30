@@ -13,11 +13,24 @@ enum RLPError: Error {
 
 
 extension RLPType {
-    public func encodeRLP() throws -> Data? {
-        if let element = self as? RLPElement {
-            return try! element.bytes.encoded( offset: ELEMENT_OFFSET )
-        } else if self is RLPList {
-            return nil
+    public func rlpEncodedData() throws -> Data? {
+        if let rlpTypeELement = self as? RLPElement {
+            return try! rlpTypeELement.bytes.encoded( offset: ELEMENT_OFFSET )
+        } else if let rlpTypeList = self as? RLPList {
+            let mappedData = try! rlpTypeList.list.map({ (element) throws -> Data?  in
+                return try! element.rlpEncodedData()
+            })
+            
+            let reducedMutableData = mappedData.reduce(NSMutableData(), { ( accumulator, bytes) -> NSMutableData in
+                accumulator.append( bytes! )
+                return accumulator
+            })
+
+            let reducedData = reducedMutableData as Data
+            return try! reducedData.encoded(offset: LIST_OFFSET)
+//            is RLPList -> element.map { it.encode() }
+//                .fold(ByteArray(0), { acc, bytes -> acc + bytes }) // this can be speed optimized when needed
+//                .encode(LIST_OFFSET)
         }
 
         throw RLPError.encodingCallerTypeBad( description: "RLPType must be RLPElement or RLPList" )
@@ -64,14 +77,14 @@ extension Data {
 
 extension String {
     /// Throws if the receiver can’t be converted without losing some information (such as accents or case)
-    public func toRLP() throws -> RLPElement {
+    public func toRLPType() throws -> RLPElement {
         guard let bytes = self.data( using: .utf8 ) else { throw RLPError.toRLPConversionLosesInformation }
         return RLPElement.init( bytes: bytes )
     }
 }
 
 extension Int {
-    public func toRLP() throws -> RLPElement {
+    public func toRLPType() throws -> RLPElement {
         if self == 0 {
             return RLPElement.init( bytes: Data() )
         }
@@ -83,7 +96,7 @@ extension Int {
 public class RLPElement: NSObject, RLPType {
     public var bytes: Data
 
-    init( bytes: Data ) {
+    public init( bytes: Data ) {
         self.bytes = bytes
         super.init()
     }
@@ -93,7 +106,7 @@ public class RLPElement: NSObject, RLPType {
 public class RLPList: NSObject, RLPType {
     public var list: [RLPType]
     
-    init( list: [RLPType] ) {
+    public init( list: [RLPType] ) {
         self.list = list
         super.init()
     }
@@ -123,8 +136,3 @@ extension Int {
     }
 }
 
-//fun Int.toByteArray() = ByteArray(4, { i -> shr(8 * (3 - i)).toByte() })
-//fun Int.toMinimalByteArray() = toByteArray().let { it.copyOfRange(it.minimalStart(), 4) }
-
-//private fun ByteArray.minimalStart() = indexOfFirst { it != 0.toByte() }.let { if (it == -1) 4 else it }
-//fun ByteArray.removeLeadingZero() = if (first() == 0.toByte()) copyOfRange(1, size) else this

@@ -11,15 +11,15 @@ import Nimble
 import RLP
 import NSData_FastHex
 
-extension Data {
+extension String {
     
-    fileprivate static func fromHexString (string: String) -> Data {
+    fileprivate func dataFromHex() -> Data {
         // Based on: http://stackoverflow.com/a/2505561/313633
         var data = NSMutableData()
         
         var temp = ""
         
-        for char in string {
+        for char in self {
             temp+=String(char)
             if(temp.count == 2) {
                 let scanner = Scanner(string: temp)
@@ -38,24 +38,23 @@ extension Data {
 class RLPTests: QuickSpec {
     
     func encodedData( string: String ) -> Data? {
-        let rlpType = try! string.toRLP()
-        return try! (rlpType as! RLPType).encodeRLP()
+        let rlpType = try! string.toRLPType()
+        return try! (rlpType as RLPType).rlpEncodedData()
     }
-    
+
     func encodedData( aInt: Int ) -> Data? {
-        let rlpType = try! aInt.toRLP()
-        return try! (rlpType as! RLPType).encodeRLP()
+        let rlpType = try! aInt.toRLPType()
+        return try! (rlpType as RLPType).rlpEncodedData()
     }
     
     func data( hexString: String ) -> Data {
 //        return NSData( hexString: hexString ) as Data
-        return Data.fromHexString(string: hexString)
+        return hexString.dataFromHex()
     }
 
 
     override func spec() {
         describe("Encoding works") {
-
             it("can encode strings") {
                 let emptyStringBytes = self.encodedData( string: "" )
                 let referenceEmptyData = self.data( hexString: "80" )
@@ -70,8 +69,8 @@ class RLPTests: QuickSpec {
                 expect( latin1Bytes ) == referenceLatin1Bytes
                 
 //                let latin2Bytes = self.encodedData( string: "Lorem ipsum dolor sit amet, consectetur adipisicing elit" )
-                let rlpType = try! "Lorem ipsum dolor sit amet, consectetur adipisicing elit".toRLP()
-                let encodedRLP = try! (rlpType as! RLPType).encodeRLP()
+                let rlpType = try! "Lorem ipsum dolor sit amet, consectetur adipisicing elit".toRLPType()
+                let encodedRLP = try! (rlpType as! RLPType).rlpEncodedData()
                 let referenceLatin2Bytes = self.data( hexString: "b8384c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465747572206164697069736963696e6720656c6974" )
                 expect( encodedRLP ) == referenceLatin2Bytes
                 
@@ -82,14 +81,14 @@ class RLPTests: QuickSpec {
             }
 
             it("can encode Ints") {
-                let rlpType = try! 0.toRLP()
-                let stringEmptyType = try! "".toRLP()
-                let encodedZero = try! (rlpType as! RLPType).encodeRLP()
-                let encodedEmptyString = try! (stringEmptyType as! RLPType).encodeRLP()
+                let rlpType = try! 0.toRLPType()
+                let stringEmptyType = try! "".toRLPType()
+                let encodedZero = try! (rlpType as! RLPType).rlpEncodedData()
+                let encodedEmptyString = try! (stringEmptyType as! RLPType).rlpEncodedData()
                 expect( encodedZero ) == self.data( hexString:"80" )
                 
-                let rlpType2 = try! 1.toRLP()
-                let encodedOne = try! (rlpType2 as! RLPType).encodeRLP()
+                let rlpType2 = try! 1.toRLPType()
+                let encodedOne = try! (rlpType2 as! RLPType).rlpEncodedData()
                 let expectedData = self.data( hexString: "01" )
                 expect( encodedOne ) == expectedData
                 expect( self.encodedData( aInt: 16) ) == self.data( hexString: "10" )
@@ -97,23 +96,27 @@ class RLPTests: QuickSpec {
                 expect( self.encodedData( aInt: 127 ) ) == self.data( hexString: "7f" )
                 expect( self.encodedData( aInt: 128 ) ) == self.data( hexString: "8180" )
                 
-                let rlpTypeThousand = try! 1000.toRLP()
-                let encodedThousand = try! (rlpTypeThousand as! RLPType).encodeRLP()
+                let rlpTypeThousand = try! 1000.toRLPType()
+                let encodedThousand = try! (rlpTypeThousand as! RLPType).rlpEncodedData()
                 let expectedThousandData = self.data( hexString: "8203e8" )
                 expect( encodedThousand ) == expectedThousandData
                 expect( self.encodedData( aInt: 1000 ) ) == self.data( hexString: "8203e8" )
                 expect( self.encodedData( aInt: 100000 ) ) == self.data( hexString: "830186a0" )
             }
-/*
+
             it("can encode arrays") {
-                export(RLPList(emptyList()).encode() == "c0".hexToData()
-                export(RLPList(listOf("dog".toRLP(), "god".toRLP(), "cat".toRLP())).encode() == "cc83646f6783676f6483636174".hexToData())
+                expect( try! RLPList( list: [RLPType]()).rlpEncodedData()) == "c0".dataFromHex()
+                
+                let rlpList: [RLPType] = [ try! "dog".toRLPType(), try! "god".toRLPType(), try! "cat".toRLPType() ]
+                expect( try! RLPList( list: rlpList ).rlpEncodedData() ) == "cc83646f6783676f6483636174".dataFromHex()
 
-                export(RLPList(listOf("zw".toRLP(), RLPList(listOf(4.toRLP())), 1.toRLP())).encode() == "c6827a77c10401".hexToData())
+                let rlpList2: [RLPType] = [ try! "zw".toRLPType(), RLPList( list: [try! 4.toRLPType()]), try! 1.toRLPType() ]
+                expect( try! RLPList( list: rlpList2 ).rlpEncodedData() ) == "c6827a77c10401".dataFromHex()
 
-                export(RLPList(listOf(RLPList(listOf(RLPList(emptyList()), RLPList(emptyList()))), RLPList(emptyList()))).encode() == "c4c2c0c0c0".hexToData())
+                let rlpList3  = RLPList( list: [RLPList( list: [RLPList(list:[RLPType]()), RLPList(list: [RLPType]())]), RLPList(list:[RLPType]())])
+                expect( try! rlpList3.rlpEncodedData() ) == "c4c2c0c0c0".dataFromHex()
             }
-*/
+
         }
  
     }
